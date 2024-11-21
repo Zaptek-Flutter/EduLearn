@@ -9,7 +9,7 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 370,
+      width: 390,
       height: 50,
       decoration: BoxDecoration(
           color: const Color.fromRGBO(15, 12, 128, 1),
@@ -20,7 +20,7 @@ class Search extends StatelessWidget {
           GestureDetector(
             onTap: () => print('Search'),
             child: Container(
-              width: 290,
+              width: 320,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Row(
@@ -46,7 +46,7 @@ class Search extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 20,),
+          const SizedBox(width: 10,),
           GestureDetector(onTap: () => print('Category'),
           child: Container(
             width: 60,

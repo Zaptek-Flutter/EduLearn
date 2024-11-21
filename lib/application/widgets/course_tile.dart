@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:edulearn/application/screens/course.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:edulearn/models/course.dart';
@@ -27,24 +28,8 @@ class CourseTile extends ConsumerWidget {
         child: InkWell(
           onTap: () {
             //Push to Course screen
-            // Detailed course information logging
-            print('Course Details:');
-            print('ID: ${course.id}');
-            print('Title: ${course.title}');
-            print('Instructor: ${course.instructor}');
-            print('Rating: ${course.rating}');
-            print('Duration: ${course.duration} hours');
-            print('Description: ${course.description}');
-            print('Thumbnail URL: ${course.thumbnailUrl}');
-            print('Number of Modules: ${course.modulesCount}');
             
-            print('\nModules:');
-            for (var module in course.modules) {
-              print('- Module ID: ${module.id}');
-              print('  Title: ${module.title}');
-              print('  Duration: ${module.duration} minutes');
-              print('  Completed: ${module.isCompleted}');
-            }
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Courses(course: course)));
           },
           child: Stack(
             fit: StackFit.expand,
@@ -104,6 +89,7 @@ class CourseTile extends ConsumerWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           //Push to course screen
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Courses(course: course)));
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 4),

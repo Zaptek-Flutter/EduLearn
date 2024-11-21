@@ -26,6 +26,7 @@ class Home extends StatelessWidget {
               ),
             ),
             const CoursesListView(),
+            const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
