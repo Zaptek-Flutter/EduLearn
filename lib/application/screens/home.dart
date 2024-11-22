@@ -1,5 +1,6 @@
 import 'package:edulearn/application/widgets/course_tile_view.dart';
 import 'package:edulearn/application/widgets/home_header.dart';
+import 'package:edulearn/application/widgets/my_courses_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,8 +26,15 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            const CoursesListView(),
-            const SizedBox(height: 20,),
+            const SingleChildScrollView(
+              child: SizedBox(
+                height: 280,
+                child: CoursesListView(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
@@ -37,6 +45,9 @@ class Home extends StatelessWidget {
                   color: const Color.fromRGBO(51, 51, 1, 1),
                 ),
               ),
+            ),
+            const Expanded(
+              child: MyCoursesList(),
             ),
           ],
         ),

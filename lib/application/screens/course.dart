@@ -14,7 +14,6 @@ class Courses extends ConsumerWidget {
   final Course course;
   const Courses({super.key, required this.course});
 
-  // Function to show the profile when tapped
   void _showProfileModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -27,123 +26,195 @@ class Courses extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final enrollmentState = ref.watch(enrollmentProvider);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () => Navigator.pop(context),
-                        child: Image.asset(
-                          'assets/icons/back.png',
-                          width: 30,
-                        ),
-                      ),
-                      Text('Back',
-                          style: GoogleFonts.roboto(
-                              color: const Color.fromRGBO(230, 126, 34, 1))),
-                      const SizedBox(width: 260),
-                      InkWell(
-                        onTap: () => print("Notifactions"),
-                        child: Image.asset(
-                          'assets/icons/notification.png',
-                          width: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 30),
-                      InkWell(
-                        onTap: () => _showProfileModal(context),
-                        child: Image.asset(
-                          'assets/icons/user.png',
-                          width: 24,
-                          color: const Color.fromRGBO(230, 126, 34, 1),
-                        ),
-                      ),
-                    ],
-                  ),
+            SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: screenSize.height - MediaQuery.of(context).padding.top,
                 ),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  child: Courseimage(
-                    thumbnail: course.thumbnailUrl,
-                  ),
-                ),
-                Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(width: 20),
-                    Text(
-                      'Instructor|${course.instructor}',
-                      style: GoogleFonts.roboto(
-                          fontSize: 16,
-                          color: const Color.fromRGBO(119, 119, 119, 1)),
+                    SizedBox(height: isSmallScreen ? 10 : 20),
+                    // Header section
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isSmallScreen ? 8 : 16,
+                        vertical: 8,
+                      ),
+                      width: double.infinity,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Back button and text
+                              Flexible(
+                                flex: 2,
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: Image.asset(
+                                        'assets/icons/back.png',
+                                        width: 30,
+                                      ),
+                                    ),
+                                    Text('Back',
+                                        style: GoogleFonts.roboto(
+                                            color: const Color.fromRGBO(230, 126, 34, 1))),
+                                  ],
+                                ),
+                              ),
+                              // Notification and profile icons
+                              Flexible(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => print("Notifications"),
+                                      icon: Image.asset(
+                                        'assets/icons/notification.png',
+                                        width: 24,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () => _showProfileModal(context),
+                                      icon: Image.asset(
+                                        'assets/icons/user.png',
+                                        width: 24,
+                                        color: const Color.fromRGBO(230, 126, 34, 1),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
-                    const SizedBox(width: 120),
-                    StarRating(rating: course.rating),
-                    Text(
-                      'Rate',
-                      style: GoogleFonts.roboto(
-                          color: const Color.fromRGBO(119, 119, 119, 1), fontSize: 16),
-                    )
+                    // Course image
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isSmallScreen ? 8 : 16,
+                        vertical: 8,
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: Courseimage(thumbnail: course.thumbnailUrl),
+                      ),
+                    ),
+                    // Instructor and rating
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isSmallScreen ? 8 : 20,
+                        vertical: 8,
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  'Instructor|${course.instructor}',
+                                  style: GoogleFonts.roboto(
+                                    fontSize: isSmallScreen ? 14 : 16,
+                                    color: const Color.fromRGBO(119, 119, 119, 1),
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  StarRating(rating: course.rating),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    course.rating.toString(),
+                                    style: GoogleFonts.roboto(
+                                      color: const Color.fromRGBO(119, 119, 119, 1),
+                                      fontSize: isSmallScreen ? 14 : 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    // Course title and duration
+                    Padding(
+                      padding: EdgeInsets.all(isSmallScreen ? 8 : 16),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 151,
+                                child: Text(
+                                course.title,
+                                style: GoogleFonts.roboto(
+                                  color: Colors.black,
+                                  fontSize: isSmallScreen ? 20 : 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                              ),
+                              const SizedBox(width: 115,),
+                              Text(
+                                '${course.duration} Hours | ${course.modulesCount} Modules',
+                                style: GoogleFonts.roboto(
+                                  color: Colors.black,
+                                  fontSize: isSmallScreen ? 16 : 18,
+                                ),
+                              ),
+                              
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    // Course description
+                    Padding(
+                      padding: EdgeInsets.all(isSmallScreen ? 8 : 16),
+                      child: Text(
+                        course.description,
+                        style: GoogleFonts.roboto(
+                          color: const Color.fromRGBO(119, 119, 119, 1),
+                          fontSize: isSmallScreen ? 14 : 16,
+                        ),
+                      ),
+                    ),
+                    // Module display
+                    SizedBox(
+                      height: screenSize.height * 0.4,
+                      child: ModuleDisplay(course: course),
+                    ),
+                    SizedBox(height: isSmallScreen ? 60 : 80),
                   ],
                 ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        course.title,
-                        style: GoogleFonts.roboto(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '${course.duration} Hours | ${course.modulesCount} Modules',
-                        style: GoogleFonts.roboto(
-                            color: Colors.black, fontSize: 18),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  width: double.infinity,
-                  child: Text(
-                    course.description,
-                    style: GoogleFonts.roboto(
-                      color: const Color.fromRGBO(119, 119, 119, 1),
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                Expanded(child: ModuleDisplay(course: course)),
-                const SizedBox(height: 80), // Space for floating button
-              ],
+              ),
             ),
-            
             // Floating Enroll Button
             Positioned(
-              bottom: 20,
-              left: 16,
-              right: 16,
+              bottom: isSmallScreen ? 16 : 20,
+              left: isSmallScreen ? 12 : 16,
+              right: isSmallScreen ? 12 : 16,
               child: Container(
                 width: double.infinity,
-                height: 60,
+                height: isSmallScreen ? 50 : 60,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -163,19 +234,24 @@ class Courses extends ConsumerWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(46, 204, 113, 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(isSmallScreen ? 20 : 25),
                     ),
                   ),
                   child: enrollmentState.isEnrolling
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
                         )
                       : Text(
-                          'Enroll Now', 
+                          'Enroll Now',
                           style: GoogleFonts.roboto(
-                            color: Colors.white, 
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold
+                            color: Colors.white,
+                            fontSize: isSmallScreen ? 16 : 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                 ),

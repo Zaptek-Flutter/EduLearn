@@ -57,6 +57,7 @@ class EduLearn extends StatelessWidget {
         '/signup': (context) => const Signup(),
         '/home': (context) => const Home(),
         '/login': (context) => const Signin(),
+        
       },
     );
   }
