@@ -28,7 +28,7 @@ final enrolledCoursesProvider = StreamProvider.autoDispose((ref) {
             rating: (data['course_rating'] ?? 0.0).toDouble(),
             duration: data['course_duration'] ?? '',
             modulesCount: data['course_modules_count'] ?? 0,
-            modules: [], // If you need modules, you'll need to fetch them separately
+            modules: [], 
           );
         }).toList();
       });

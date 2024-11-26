@@ -1,3 +1,4 @@
+import 'package:edulearn/application/screens/my_courses.dart';
 import 'package:edulearn/application/widgets/course_tile_view.dart';
 import 'package:edulearn/application/widgets/home_header.dart';
 import 'package:edulearn/application/widgets/my_courses_list_view.dart';
@@ -37,13 +38,19 @@ class Home extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(
-                'My Courses',
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
-                  color: const Color.fromRGBO(51, 51, 1, 1),
+              child: TextButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyCourses()),
                 ),
+                style: TextButton.styleFrom(
+                  textStyle: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                  foregroundColor: const Color.fromRGBO(51, 51, 1, 1),
+                ),
+                child: const Text('My Courses'),
               ),
             ),
             const Expanded(

@@ -90,7 +90,6 @@ class EnrollmentNotifier extends StateNotifier<EnrollmentState> {
           'module_duration': module.duration,
           'module_url': module.moduleUrl,
           'is_completed': false,
-          'progress': 0,
           'last_accessed': null,
           'completion_date': null,
         });
