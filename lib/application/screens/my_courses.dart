@@ -1,5 +1,5 @@
 import 'package:edulearn/application/widgets/home_head.dart';
-import 'package:edulearn/application/widgets/my_courses_filter.dart';
+import 'package:edulearn/application/widgets/my_courses_list_view.dart';
 import 'package:flutter/material.dart';
 
 class MyCourses extends StatefulWidget {
@@ -18,15 +18,11 @@ class _MyCoursesState extends State<MyCourses> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             HomeHead(),
-            Stack(
-              children: [
-                Positioned(
-                  top: 100,
-                  left: 10,
-                  child: MyCoursesFilter(),
-                ),
-              ],
-            ),
+            SizedBox(height: 10,),
+              Expanded(
+              child: MyCoursesList(),
+            )
+            
           ],
         ),
       ),

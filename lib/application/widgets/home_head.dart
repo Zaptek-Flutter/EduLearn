@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:edulearn/application/widgets/my_courses_filter.dart';
 import 'package:edulearn/application/widgets/profile.dart';
 import 'package:edulearn/application/widgets/search.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,13 @@ class HomeHead extends StatelessWidget {
             top: 105,
             left: 15,
             child: Search(),
-          )
+          ),
+          const Positioned(
+            top: 170,
+            left: 15,
+            child: MyCoursesFilter(),
+          ),
+          
         ],
       ),
     );
