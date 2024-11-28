@@ -141,7 +141,7 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
                             backgroundColor: Colors.grey[300],
                             valueColor: const AlwaysStoppedAnimation<Color>(
                                 Colors.orange),
-                            minHeight: 8,
+                            minHeight: 10,
                           ),
                         ),
                       ),

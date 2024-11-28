@@ -121,6 +121,55 @@ class CoursesNotifier extends StateNotifier<List<Course>> {
         ),
       ],
     ),
+     Course(
+      id: '4',
+      title: 'Web Development Bootcamp',
+      instructor: 'Sarah Johnson',
+      rating: 4.5,
+      duration: 5.0,
+      modulesCount: 6,
+      description: 'Learn full-stack web development from scratch.',
+      thumbnailUrl:
+          'https://media.istockphoto.com/id/537331500/photo/programming-code-abstract-technology-background-of-software-deve.webp?s=2048x2048&w=is&k=20&c=QmU65ppziekU7cl_KNWyMCteKvhhSYueIqEBlQWvid0=',
+      modules: [
+        Module(
+          id: '1',
+          title: 'HTML & CSS Basics',
+          duration: 15,
+          moduleUrl: 'https://img.freepik.com/free-photo/html-css-basics_23-2149209510.jpg',
+        ),
+        Module(
+          id: '2',
+          title: 'JavaScript Fundamentals',
+          duration: 20,
+          moduleUrl: 'https://img.freepik.com/free-photo/javascript-fundamentals_23-2149209520.jpg',
+        ),
+        Module(
+          id: '3',
+          title: 'Responsive Web Design',
+          duration: 18,
+          moduleUrl: 'https://img.freepik.com/free-photo/responsive-web-design_23-2149209535.jpg',
+        ),
+        Module(
+          id: '4',
+          title: 'Backend Development with Node.js',
+          duration: 25,
+          moduleUrl: 'https://img.freepik.com/free-photo/backend-development-nodejs_23-2149209540.jpg',
+        ),
+        Module(
+          id: '5',
+          title: 'Database Management with MongoDB',
+          duration: 22,
+          moduleUrl: 'https://img.freepik.com/free-photo/database-management-mongodb_23-2149209550.jpg',
+        ),
+        Module(
+          id: '6',
+          title: 'Deploying Web Applications',
+          duration: 30,
+          moduleUrl: 'https://img.freepik.com/free-photo/deploying-web-applications_23-2149209560.jpg',
+        ),
+      ],
+    ),
   ];
 
   List<Course> enrolledCourses = [];
