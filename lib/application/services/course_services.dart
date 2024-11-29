@@ -211,4 +211,6 @@ class CoursesNotifier extends StateNotifier<List<Course>> {
           course,
     ];
   }
+
+  
 }

@@ -23,36 +23,27 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
   @override
   void initState() {
     super.initState();
-    
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-    final authState = ref.read(authProvider);
-    final userId = authState.user?.uid ?? '';
-    
-    if (userId.isNotEmpty && !_progressInitialized) {
-      // Initialize progress with total modules count
-      ref
-          .read(userProgressProvider.notifier)
-          .initializeProgress(
-            userId, 
-            widget.course.id, 
-            widget.course.modulesCount
-          );
-      
-      setState(() {
-        _progressInitialized = true;
-      });
-    }
-  });
-  }
 
-  
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authState = ref.read(authProvider);
+      final userId = authState.user?.uid ?? '';
+
+      if (userId.isNotEmpty && !_progressInitialized) {
+        ref.read(userProgressProvider.notifier).initializeProgress(
+            userId, widget.course.id, widget.course.modulesCount);
+
+        setState(() {
+          _progressInitialized = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Watch the progress percentage directly from the provider
     final progressPercentage = ref
-        .watch(userProgressProvider.notifier)
-        .getProgressPercentage(widget.course.id);
+      .watch(userProgressProvider.notifier)
+      .getProgressPercentage(widget.course.id);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -71,7 +62,6 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Course thumbnail (unchanged)
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Image.network(
@@ -89,8 +79,6 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
               },
             ),
           ),
-
-          // Course details
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -105,7 +93,6 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
-
                   Text(
                     widget.course.description,
                     style: GoogleFonts.roboto(
@@ -115,8 +102,6 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 6),
-
-                  // Progress bar
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,7 +122,7 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: LinearProgressIndicator(
-                            value: progressPercentage / 100, // Convert to 0-1 range
+                            value: progressPercentage / 100,
                             backgroundColor: Colors.grey[300],
                             valueColor: const AlwaysStoppedAnimation<Color>(
                                 Colors.orange),
@@ -157,7 +142,7 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
                             ),
                           ),
                           Text(
-                            '${progressPercentage.toInt()}%',
+                            '${progressPercentage.toStringAsFixed(0)}%',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey[600],
@@ -167,8 +152,6 @@ class _MyCoursesCardState extends ConsumerState<MyCoursesCard> {
                       ),
                     ],
                   ),
-
-                  // Continue button (unchanged)
                   const SizedBox(height: 16),
                   SizedBox(
                     width: 107.3,

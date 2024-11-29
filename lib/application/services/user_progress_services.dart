@@ -120,6 +120,7 @@ class UserProgressNotifier extends StateNotifier<Map<String, UserProgress>> {
   double getProgressPercentage(String courseId) {
     return state[courseId]?.calculateProgress() ?? 0.0;
   }
+  
 }
 
 final userProgressProvider = StateNotifierProvider<UserProgressNotifier, Map<String, UserProgress>>(
